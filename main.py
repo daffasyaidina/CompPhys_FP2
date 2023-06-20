@@ -144,30 +144,36 @@ running = True
 while running:
     win.fill(BLACK)  # Clear the screen
     
+    # Quit event detected, exit the game loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
+    # Exit the game loop when Esc or Q key is pressed
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE or event.key == pygame.K_q:
                 running = False
-
+        
+        # Reset the projectile group and current projectile
             if event.key == pygame.K_r:
                 projectile_group.empty()
                 currentp = None
 
+        # Reset the velocity and gravity values
             if event.key == pygame.K_g:
                 active = True
                 active_box = 'g'
 
+        # Activate the gravity input textbox
             if event.key == pygame.K_h:
                 active = True
                 active_box = 'u'
 
+        
             if active:
                 if active_box == 'u':
                     if event.key == pygame.K_RETURN:
-                        try:
+                        try:                                # Parse the velocity input and update the textbox surface
                             u = float(u_text)
                         except ValueError:
                             print("Invalid input for velocity!")
@@ -175,12 +181,12 @@ while running:
                         u_text_surface = font.render(u_text, True, WHITE)
                         active = False
                     elif event.key == pygame.K_BACKSPACE:
-                        u_text = u_text[:-1]
+                        u_text = u_text[:-1]                 # Remove the last character from the velocity input
                     else:
-                        u_text += event.unicode
+                        u_text += event.unicode              # Append the pressed key to the velocity input
                     u_text_surface = font.render(u_text, True, WHITE)
                 elif active_box == 'g':
-                    if event.key == pygame.K_RETURN:
+                    if event.key == pygame.K_RETURN:         # Parse the gravity input and update the textbox surface
                         try:
                             g = float(g_text)
                         except ValueError:
@@ -189,11 +195,12 @@ while running:
                         g_text_surface = font.render(g_text, True, WHITE)
                         active = False
                     elif event.key == pygame.K_BACKSPACE:
-                        g_text = g_text[:-1]
+                        g_text = g_text[:-1]                # Remove the last character from the gravity input
                     else:
-                        g_text += event.unicode
+                        g_text += event.unicode              # Append the pressed key to the gravity input
                     g_text_surface = font.render(g_text, True, WHITE)
 
+        # Create a new projectile and add it to the group
         if event.type == pygame.MOUSEBUTTONUP:
             pos = event.pos
             theta = getAngle(pos, origin)
@@ -202,12 +209,13 @@ while running:
                 projectile_group.add(projectile)
                 currentp = projectile
 
+        # Update the line end point and arc angle indicator
             pos = pygame.mouse.get_pos()
             theta = getAngle(pos, origin)
             if -90 < theta <= 0:
                 end = getPosOnCircumeference(theta, origin)
                 arct = toRadian(theta)
-
+       
         if event.type == pygame.MOUSEMOTION:
             if clicked:
                 pos = event.pos
