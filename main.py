@@ -26,15 +26,10 @@ FPS = 60
 # Color definitions
 BLACK = (18, 18, 18)
 WHITE = (217, 217, 217)
-RED = (252, 91, 122)
-GREEN = (29, 161, 16)
-BLUE = (78, 193, 246)
-ORANGE = (252, 76, 2)
-YELLOW = (254, 221, 0)
-PURPLE = (155, 38, 182)
 AQUA = (0, 249, 182)
+YELLOW = (255, 255, 0)
 
-COLORS = [RED, GREEN, BLUE, ORANGE, YELLOW, PURPLE]
+#COLORS = [RED, GREEN, BLUE, ORANGE, YELLOW, PURPLE]
 
 # Font and text rendering
 font = pygame.font.SysFont('verdana', 12)
@@ -69,7 +64,7 @@ class Projectile(pygame.sprite.Sprite):
         self.u = u
         self.theta = toRadian(abs(theta))
         self.x, self.y = origin
-        self.color = random.choice(COLORS)
+        self.color = WHITE
 
         self.ch = 0
         self.dx = 2
@@ -118,7 +113,7 @@ class Projectile(pygame.sprite.Sprite):
         self.path = self.path[-50:]
 
         # Drawing the projectile path
-        max_path_length = 200
+        max_path_length = 500
         if len(self.path) > max_path_length:
             self.path = self.path[-max_path_length:]
         
